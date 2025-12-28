@@ -22,10 +22,10 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
         title: node_data.title,
         value: value,
         url: node_data.url,
-        shape: dot
+        shape: "dot"   // ✅ FIXED
       });
 
-      // DEFENSIVE CODE 
+      // DEFENSIVE EDGES
       if (Array.isArray(node_data.edges)) {
         node_data.edges.forEach(e => {
           edges.add({ from: Number(node_id), to: e, arrows: "to" });
@@ -36,16 +36,43 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
     const network = new vis.Network(
       document.getElementById("mynetwork"),
       { nodes, edges },
-      { nodes: {shape: "dot",
-                scaling: {
-                  min: 10,
-                  max: 50
-                }
-               },
-        edges: {color: "lightgray",
-                length: 120
-             },
-        physics: { barnesHut: {} } }
+      {
+        nodes: {
+          shape: "dot",
+          scaling: { min: 10, max: 50 }
+        },
+        edges: {
+          color: "lightgray",
+          length: 120
+        },
+        physics: { barnesHut: {} }
+      }
     );
-  });
+
+    // ✅ CLICK TO OPEN URL
+    network.on("click", function (params) {
+      if (params.nodes.length === 0) return;
+
+      const nodeId = params.nodes[0];
+      const nodeData = nodes.get(nodeId);
+
+      if (nodeData?.url && nodeData.url.trim() !== "") {
+        if (nodeData.url.startsWith("http")) {
+          window.open(nodeData.url, "_blank");
+        } else {
+          window.location.href = nodeData.url;
+        }
+      }
+    });
+
+    // OPTIONAL UX
+    network.on("hoverNode", () => {
+      document.body.style.cursor = "pointer";
+    });
+    network.on("blurNode", () => {
+      document.body.style.cursor = "default";
+    });
+
+  })
+  .catch(err => console.error(err));
 </script>
