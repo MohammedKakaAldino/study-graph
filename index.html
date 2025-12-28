@@ -1,0 +1,48 @@
+<script>
+fetch("https://drive.google.com/uc?export=download&id=1Jr70YRAV8wkmMSrmvLCXfENX07VC2IMC")
+  .then(response => response.json())
+  .then(database => {
+
+    var nodes = new vis.DataSet([]);
+    var edges = new vis.DataSet([]);
+
+    for (const [node_id, node_data] of Object.entries(database)) {
+      let value = 40;
+      if (node_data.type === "H1") value = 100;
+      else if (node_data.type === "H2") value = 80;
+      else if (node_data.type === "H3") value = 60;
+
+      nodes.add({
+        id: Number(node_id),
+        label: node_data.label,
+        title: node_data.title,
+        value: value,
+        url: node_data.url,
+        shape: "dot"
+      });
+
+      node_data.edges.forEach(edge => {
+        edges.add({ from: Number(node_id), to: edge, arrows: "to" });
+      });
+    }
+
+    var container = document.getElementById("mynetwork");
+    var data = { nodes: nodes, edges: edges };
+    var options = {
+      nodes: { shape: "dot", size: 18 },
+      edges: { color: "lightgray", length: 120 },
+      physics: { barnesHut: {} }
+    };
+
+    var network = new vis.Network(container, data, options);
+
+    network.on("click", function (params) {
+      if (params.nodes.length > 0) {
+        let nodeId = params.nodes[0];
+        let url = nodes.get(nodeId).url;
+        if (url) window.open(url, "_blank");
+      }
+    });
+
+  }); 
+</script>
