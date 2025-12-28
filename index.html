@@ -16,13 +16,25 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
       else if (node_data.type === "H2") value = 80;
       else if (node_data.type === "H3") value = 60;
 
+      // ✅ DETECT CLICKABLE NODE
+      const isClickable =
+        (typeof node_data.url === "string" && node_data.url.trim() !== "") ||
+        (Array.isArray(node_data.edges) && node_data.edges.length > 0);
+
       nodes.add({
         id: Number(node_id),
         label: node_data.label,
         title: node_data.title,
-        value: value,
+        value,
         url: node_data.url,
-        shape: "dot"
+        shape: "dot",
+
+        // ✅ COLOR BASED ON CLICKABLE
+        color: isClickable
+          ? { background: "#4dabf7", border: "#1c7ed6" }   // biru = clickable
+          : { background: "#adb5bd", border: "#868e96" }, // abu = non-clickable
+
+        font: { color: "#ffffff" }
       });
 
       // DEFENSIVE EDGES
@@ -53,19 +65,18 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
     network.on("click", function (params) {
       if (params.nodes.length === 0) return;
 
-      const nodeId = params.nodes[0];
-      const nodeData = nodes.get(nodeId);
+      const node = nodes.get(params.nodes[0]);
 
-      if (nodeData?.url && nodeData.url.trim() !== "") {
-        if (nodeData.url.startsWith("http")) {
-          window.open(nodeData.url, "_blank");
+      if (node?.url && node.url.trim() !== "") {
+        if (node.url.startsWith("http")) {
+          window.open(node.url, "_blank");
         } else {
-          window.location.href = nodeData.url;
+          window.location.href = node.url;
         }
       }
     });
 
-    // OPTIONAL UX
+    // ✅ UX: CURSOR CHANGE
     network.on("hoverNode", () => {
       document.body.style.cursor = "pointer";
     });
