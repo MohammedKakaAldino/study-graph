@@ -25,7 +25,6 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
       else if (node_data.type === "H2") value = 80;
       else if (node_data.type === "H3") value = 60;
 
-      // ✅ DETECT CLICKABLE NODE
       const isClickable =
         (typeof node_data.url === "string" && node_data.url.trim() !== "") ||
         (Array.isArray(node_data.edges) && node_data.edges.length > 0);
@@ -37,20 +36,14 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
         value,
         url: node_data.url,
         shape: "dot",
-
-        // ✅ COLOR BASED ON CLICKABLE
         color: isClickable
-          ? { background: "#4dabf7", border: "#1c7ed6" }   // biru = clickable
-          : { background: "#adb5bd", border: "#868e96" }, // abu = non-clickable
-
+          ? { background: "#4dabf7", border: "#1c7ed6" }
+          : { background: "#adb5bd", border: "#868e96" },
         font: { color: "#ffffff" }
       });
 
-      // DEFENSIVE EDGES
       if (Array.isArray(node_data.edges)) {
-        node_data.edges.forEach(e => {
-          edges.add({ from: Number(node_id), to: e });
-        });
+        node_data.edges.forEach(e => edges.add({ from: Number(node_id), to: e }));
       }
     }
 
@@ -58,6 +51,10 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
       document.getElementById("mynetwork"),
       { nodes, edges },
       {
+        background: { color: "#2b2b2b" },
+        interaction: {
+          hover: true   // ⭐ BARIS KRITIS
+        },
         nodes: {
           shape: "dot",
           scaling: { min: 10, max: 50 }
@@ -70,30 +67,26 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
       }
     );
 
-    // ✅ CLICK TO OPEN URL
-    network.on("click", function (params) {
-      if (params.nodes.length === 0) return;
-
-      const node = nodes.get(params.nodes[0]);
-
-      if (node?.url && node.url.trim() !== "") {
-        if (node.url.startsWith("http")) {
-          window.open(node.url, "_blank");
-        } else {
-          window.location.href = node.url;
-        }
-      }
-    });
-
-    // ✅ UX: CURSOR CHANGE
+    // CURSOR CHANGE
     network.on("hoverNode", () => {
       document.body.style.cursor = "pointer";
     });
+
     network.on("blurNode", () => {
       document.body.style.cursor = "default";
     });
 
-  })
-  .catch(err => console.error(err));
+    // CLICK TO OPEN URL
+    network.on("click", params => {
+      if (!params.nodes.length) return;
+      const node = nodes.get(params.nodes[0]);
+      if (node?.url && node.url.trim() !== "") {
+        node.url.startsWith("http")
+          ? window.open(node.url, "_blank")
+          : window.location.href = node.url;
+      }
+    });
+
+  });
 </script>
 </body>
