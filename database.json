@@ -2,113 +2,129 @@
     "1": {
         "label" : "pH",
         "title" : "Definisi pH",
-        "url" : "biologi.html",
+        "url" : "",
         "edges" : [2, 3],
-        "type" : "H1"
+        "type" : "H1",
+        "date added": "",
     },
     "2": {
         "label" : "Henderson-Hasselbalch Equation",
         "title" : "pH = pKa + Log[basa konjugat]/[asam lemah]",
-        "url" : "biologi.html",
+        "url" : "",
         "edges" : [],
-        "type" : "H3"
+        "type" : "H3",
+        "date added": ""
     },
     "3": {
         "label" : "Buffer",
         "title" : "Buffer dalam food science",
         "url" : "",
         "edges" : [2, 201],
-        "type" : "H2"
+        "type" : "H2",
+        "date added": ""
     },
     "4": {
         "label" : "Enzyme",
         "title" : "Enzyme dalam food science",
         "url" : "",
         "edges" : [3],
-        "type" : "H1"
+        "type" : "H1",
+        "date added": ""
     },
     "5": {
         "label" : "Textural",
         "title" : "Texture dalam food science",
         "url" : "",
         "edges" : [],
-        "type" : "H1"
+        "type" : "H1",
+        "date added": ""
     },
     "50": {
         "label": "Bakery",
         "title": "",
         "url": "",
         "edges": [],
-        "type": "H2"
+        "type": "H2",
+        "date added": ""
     },
     "201": {
         "label" : "Citrate buffer",
         "title" : "Asam sitrat monohidrat + Sodium sitrat dihidrat",
         "url" : "",
         "edges" : [],
-        "type" : "H2"
+        "type" : "H2",
+        "date added": ""
     },
     "100": {
         "label" : "Asam sitrat",
         "title" : "C6H8O7\nMonohydrate pKa2 = 4.76",
         "url" : "https://pubchem.ncbi.nlm.nih.gov/compound/Citric-Acid",
         "edges" : [201],
-        "type" : "S1"
+        "type" : "S1",
+        "date added": ""
     },
     "101": {
         "label": "Sodium sitrat/Trisodium sitrat",
         "title": "Na3C6H5O7\nDihydrate: C6H9Na3O9", 
         "url": "https://pubchem.ncbi.nlm.nih.gov/compound/Sodium-citrate-dihydrate",
         "edges": [201],
-        "type": "S1"
+        "type": "S1",
+        "date added": ""
     },
     "251": {
         "label": "Hardness",
         "title": "",
         "url": "",
         "edges": [5],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "252": {
         "label": "Cohesiveness",
         "title": "",
         "url": "",
         "edges": [5],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "253": {
         "label": "Viscosity",
         "title": "",
         "url": "",
         "edges": [5],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "254": {
         "label": "Springiness",
         "title": "",
         "url": "",
         "edges": [5],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "255": {
         "label": "Adhesiveness",
         "title": "",
         "url": "",
         "edges": [5],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "256": {
         "label": "Rasio Penyebaran",
         "title": "",
         "url": "",
         "edges": [5, 50],
-        "type": "H3"
+        "type": "H3",
+        "date added": ""
     },
     "2000": {
         "label": "Food Biochemistry and Food Processing",
         "title": "1: Principles/Food Analysis\n2: Biotechnology and Enzymology\n3: Meat, Poultry and Seafoods\n4: Milk\n5: Fruits, Vegetables, and Cereals\n6: Health/Functional Foods\n7: Food Processing\n8: Food Safety and Food Allergens",
         "url": "C:/Users/Acer/OneDrive/ドキュメント/Books/Food Biochemistry and food processing Edisi 2.pdf",
         "edges": [4],
-        "type": "H1"
+        "type": "H1",
+        "date added": ""
     }
 }
