@@ -3,7 +3,7 @@
 
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <script>
-fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/e8e3c16c85cb46f613230c2f89340ce570186be1/database.json")
+fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/database.json")
   .then(res => res.json())
   .then(database => {
 
@@ -11,6 +11,7 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/e8e3c16c
     const edges = new vis.DataSet();
 
     for (const [node_id, node_data] of Object.entries(database)) {
+
       let value = 40;
       if (node_data.type === "H1") value = 100;
       else if (node_data.type === "H2") value = 80;
@@ -20,32 +21,23 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/e8e3c16c
         id: Number(node_id),
         label: node_data.label,
         title: node_data.title,
-        value,
+        value: value,
         url: node_data.url
       });
 
-      node_data.edges.forEach(e =>
-        edges.add({ from: Number(node_id), to: e, arrows: "to" })
-      );
+      // DEFENSIVE CODE 
+      if (Array.isArray(node_data.edges)) {
+        node_data.edges.forEach(e => {
+          edges.add({ from: Number(node_id), to: e, arrows: "to" });
+        });
+      }
     }
 
     const network = new vis.Network(
       document.getElementById("mynetwork"),
       { nodes, edges },
-      {
-        nodes: { shape: "dot", size: 18 },
-        edges: { color: "lightgray", length: 120 },
-        physics: { barnesHut: {} }
-      }
+      { physics: { barnesHut: {} } }
     );
 
-    network.on("click", p => {
-      if (p.nodes.length) {
-        const url = nodes.get(p.nodes[0]).url;
-        if (url) window.open(url, "_blank");
-      }
-    });
-
-  })
-  .catch(err => console.error("FETCH ERROR:", err));
+  });
 </script>
