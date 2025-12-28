@@ -22,13 +22,13 @@ fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/main/dat
         title: node_data.title,
         value: value,
         url: node_data.url,
-        shape: "dot"   // ✅ FIXED
+        shape: "dot"
       });
 
       // DEFENSIVE EDGES
       if (Array.isArray(node_data.edges)) {
         node_data.edges.forEach(e => {
-          edges.add({ from: Number(node_id), to: e, arrows: "to" });
+          edges.add({ from: Number(node_id), to: e });
         });
       }
     }
