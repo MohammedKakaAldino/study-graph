@@ -1,10 +1,14 @@
+<div id="mynetwork" style="width:100%; height:600px;"></div>
+
+
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 <script>
-fetch("https://github.com/MohammedKakaAldino/study-graph/blob/e8e3c16c85cb46f613230c2f89340ce570186be1/database.json")
-  .then(response => response.json())
+fetch("https://raw.githubusercontent.com/MohammedKakaAldino/study-graph/e8e3c16c85cb46f613230c2f89340ce570186be1/database.json")
+  .then(res => res.json())
   .then(database => {
 
-    var nodes = new vis.DataSet([]);
-    var edges = new vis.DataSet([]);
+    const nodes = new vis.DataSet();
+    const edges = new vis.DataSet();
 
     for (const [node_id, node_data] of Object.entries(database)) {
       let value = 40;
@@ -16,33 +20,32 @@ fetch("https://github.com/MohammedKakaAldino/study-graph/blob/e8e3c16c85cb46f613
         id: Number(node_id),
         label: node_data.label,
         title: node_data.title,
-        value: value,
-        url: node_data.url,
-        shape: "dot"
+        value,
+        url: node_data.url
       });
 
-      node_data.edges.forEach(edge => {
-        edges.add({ from: Number(node_id), to: edge, arrows: "to" });
-      });
+      node_data.edges.forEach(e =>
+        edges.add({ from: Number(node_id), to: e, arrows: "to" })
+      );
     }
 
-    var container = document.getElementById("mynetwork");
-    var data = { nodes: nodes, edges: edges };
-    var options = {
-      nodes: { shape: "dot", size: 18 },
-      edges: { color: "lightgray", length: 120 },
-      physics: { barnesHut: {} }
-    };
+    const network = new vis.Network(
+      document.getElementById("mynetwork"),
+      { nodes, edges },
+      {
+        nodes: { shape: "dot", size: 18 },
+        edges: { color: "lightgray", length: 120 },
+        physics: { barnesHut: {} }
+      }
+    );
 
-    var network = new vis.Network(container, data, options);
-
-    network.on("click", function (params) {
-      if (params.nodes.length > 0) {
-        let nodeId = params.nodes[0];
-        let url = nodes.get(nodeId).url;
+    network.on("click", p => {
+      if (p.nodes.length) {
+        const url = nodes.get(p.nodes[0]).url;
         if (url) window.open(url, "_blank");
       }
     });
 
-  }); 
+  })
+  .catch(err => console.error("FETCH ERROR:", err));
 </script>
