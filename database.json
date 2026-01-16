@@ -39,6 +39,38 @@
         "type" : "H1",
         "date added": ""
     },
+    "6": {
+        "label" : "Pati (starches)",
+        "title" : "",
+        "url" : "",
+        "edges" : [601],
+        "type" : "H1",
+        "date added": "16-01-2026"
+    },
+    "601": {
+        "label" : "Ukuran",
+        "title" : "",
+        "url" : "",
+        "edges" : [60101, 60102],
+        "type" : "H2",
+        "date added": "16-01-2026"
+    },
+    "60101": {
+        "label" : "Spherical",
+        "title" : "",
+        "url" : "",
+        "edges" : [],
+        "type" : "H3",
+        "date added": "16-01-2026"
+    },
+    "60102": {
+        "label" : "Lenticular",
+        "title" : "",
+        "url" : "",
+        "edges" : [],
+        "type" : "H3",
+        "date added": "16-01-2026"
+    },
     "50": {
         "label": "Bakery",
         "title": "",
